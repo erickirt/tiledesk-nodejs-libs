@@ -103,7 +103,10 @@ let request;
 let tagsArray = [];
 let pushTagsToList = false;
 
-describe('CHATBOT: Add tags action', async () => {
+describe('CHATBOT: Add tags action', function () {
+    /** Integration setup (auth, import bot, MQTT) often exceeds Mocha default 2000ms */
+    this.timeout(60000);
+
     before(() => {
         return new Promise(async (resolve, reject) => {
             if (LOG_STATUS) {
@@ -281,8 +284,6 @@ describe('CHATBOT: Add tags action', async () => {
                     let msg = command.message
                     assert(msg.text, "Expect msg.text exist")
                     assert.equal(msg.text, 'tag_ok', `Expect msg.text to be 'tag_ok' but got: ${msg.text} `)
-
-    
                     let requestAfter = await tdClientTest.request.getRequestById(recipient_id).catch((err) => { 
                         console.error("(it) REQUEST API -> An error occurred during getRequestById:", err);
                         reject(err)
@@ -394,8 +395,6 @@ describe('CHATBOT: Add tags action', async () => {
                 } else if( buttonTextIsPressed &&
                     message &&  message.sender_fullname === "Add tags Chatbot"
                 ){
-
-                    
                     assert(message.attributes, "Expect message.attributes exist")
                     assert(message.attributes.commands, "Expect message.attributes.commands")
                     assert(message.attributes.commands.length >= 2, "Expect message.attributes.commands.length > 2")

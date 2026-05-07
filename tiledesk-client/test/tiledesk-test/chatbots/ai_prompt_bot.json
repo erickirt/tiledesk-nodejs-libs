@@ -1519,6 +1519,42 @@
                           "target": "blank",
                           "action": "#5134e273-466a-42a6-90e0-87e52c877bde{\"ai_model\":\"gpt-5.2\"}",
                           "show_echo": true
+                        },
+                        {
+                          "uid": "c3d4e5f678901234567890abcd0123ef",
+                          "type": "action",
+                          "value": "gpt-5.3-chat-latest",
+                          "link": "",
+                          "target": "blank",
+                          "action": "#5134e273-466a-42a6-90e0-87e52c877bde{\"ai_model\":\"gpt-5.3-chat-latest\"}",
+                          "show_echo": true
+                        },
+                        {
+                          "uid": "d4e5f678901234567890abcd01234efa",
+                          "type": "action",
+                          "value": "gpt-5.4-nano",
+                          "link": "",
+                          "target": "blank",
+                          "action": "#5134e273-466a-42a6-90e0-87e52c877bde{\"ai_model\":\"gpt-5.4-nano\"}",
+                          "show_echo": true
+                        },
+                        {
+                          "uid": "e5f678901234567890abcd012345efab",
+                          "type": "action",
+                          "value": "gpt-5.4-mini",
+                          "link": "",
+                          "target": "blank",
+                          "action": "#5134e273-466a-42a6-90e0-87e52c877bde{\"ai_model\":\"gpt-5.4-mini\"}",
+                          "show_echo": true
+                        },
+                        {
+                          "uid": "f678901234567890abcd0123456789abc",
+                          "type": "action",
+                          "value": "gpt-5.4",
+                          "link": "",
+                          "target": "blank",
+                          "action": "#5134e273-466a-42a6-90e0-87e52c877bde{\"ai_model\":\"gpt-5.4\"}",
+                          "show_echo": true
                         }
                       ]
                     }
