@@ -184,6 +184,12 @@ describe('Webhook Test', async () => {
                 assert.ok(false);
             });
             assert(result.success === true);
+
+            const result2 = await tdClientTest.webhook.deleteWebhook(webhook_id).catch((err) => { 
+                assert.ok(false);
+            });
+            assert(result2.success === true);
+            assert(result2.message === `Webhook ${webhook_id} deleted successfully`);
             done();
         });
     });

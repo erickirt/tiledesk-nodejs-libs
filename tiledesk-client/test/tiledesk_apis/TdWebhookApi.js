@@ -156,6 +156,20 @@ class Webhook {
         })
     }
 
+    async deleteWebhook(webhook_id) {
+        return new Promise((resolve, reject) => {
+            const URL = `${this.APIURL}/${this.PROJECT_ID}/webhooks/delete/${webhook_id}`
+            const HTTPREQUEST = {
+                url: URL,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': this.JWT_TOKEN
+                },
+                method: 'DELETE'
+            };
+        })
+    }
+
     // async addContentToNamespace(data) {
     //     return new Promise((resolve, reject) => {
     //         const URL = `${this.APIURL}/${this.PROJECT_ID}/kb/`
