@@ -1,0 +1,985 @@
+{
+    "webhook_enabled": false,
+    "language": "en",
+    "name": "MCP communicator",
+    "slug": "mpc-communicator",
+    "type": "tilebot",
+    "subtype": "chatbot",
+    "attributes": {
+        "variables": {
+            "ai_reply": "ai_reply",
+            "newVar": "newVar"
+        }
+    },
+    "intents": [
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionType": "reply",
+                    "text": "I didn't understand. Can you rephrase your question?",
+                    "attributes": {
+                        "commands": [
+                            {
+                                "type": "wait",
+                                "time": 500
+                            },
+                            {
+                                "type": "message",
+                                "message": {
+                                    "type": "text",
+                                    "text": "I didn't understand. Can you rephrase your question?",
+                                    "attributes": {
+                                        "attachment": {
+                                            "type": "template",
+                                            "buttons": [],
+                                            "json_buttons": "",
+                                            "json_gallery": ""
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "_tdActionId": "b02ca407d2094468a11273f1becb8ad0",
+                    "_outline": "none",
+                    "_isNoFeatured": false
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "intent_display_name": "defaultFallback",
+            "intent_id": "48a72165-6a1b-4f0d-b43e-076c43322db4",
+            "language": "en",
+            "attributes": {
+                "position": {
+                    "x": 651,
+                    "y": 692
+                },
+                "readonly": true,
+                "color": "156,163,205",
+                "nextBlockAction": {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "14d15c50-e1f3-4c89-a8ea-74e0a031062e",
+                    "_tdActionType": "intent"
+                }
+            },
+            "agents_available": false
+        },
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionType": "intent",
+                    "intentName": "#2d7e6967-9881-4e13-899c-20ae9d49ce2f",
+                    "_tdActionId": "3d124f439b4143cd93bde3486f82ea19",
+                    "_outline": "none",
+                    "_isNoFeatured": true
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "intent_display_name": "start",
+            "intent_id": "b1fbc629-1b15-42fb-acde-8ffd16ceedf4",
+            "question": "\\start",
+            "language": "en",
+            "attributes": {
+                "position": {
+                    "x": 172,
+                    "y": 384
+                },
+                "readonly": true,
+                "color": "156,163,205",
+                "nextBlockAction": {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "f687fe36-ebb6-4b05-a026-685392fe3f06",
+                    "_tdActionType": "intent"
+                }
+            },
+            "agents_available": false
+        },
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionType": "reply",
+                    "attributes": {
+                        "disableInputMessage": false,
+                        "commands": [
+                            {
+                                "type": "wait",
+                                "time": 500
+                            },
+                            {
+                                "type": "message",
+                                "message": {
+                                    "type": "text",
+                                    "text": "Select a tool to test from the list",
+                                    "attributes": {
+                                        "attachment": {
+                                            "type": "template",
+                                            "buttons": [
+                                                {
+                                                    "uid": "50f87d36af3b4ec59674e291f89b8955",
+                                                    "type": "text",
+                                                    "value": "reply_to_user",
+                                                    "link": "",
+                                                    "target": "blank",
+                                                    "action": "",
+                                                    "attributes": "",
+                                                    "show_echo": true
+                                                },
+                                                {
+                                                    "uid": "cc08feaf9c3947308ec07892a3acf1c9",
+                                                    "type": "action",
+                                                    "value": "reply_and_await_response",
+                                                    "link": "",
+                                                    "target": "blank",
+                                                    "action": "#77981916-8d00-4bc6-bc3b-c81ce8fce815",
+                                                    "attributes": "",
+                                                    "show_echo": true
+                                                },
+                                                {
+                                                    "uid": "459a4b69c95e4ef5af4b40d9d6ace0f6",
+                                                    "type": "action",
+                                                    "value": "check_available_agents",
+                                                    "link": "",
+                                                    "target": "blank",
+                                                    "action": "#2b3ca040-507d-435f-bc25-e93e5aedf5d5",
+                                                    "attributes": "",
+                                                    "show_echo": true
+                                                },
+                                                {
+                                                    "uid": "c1b2237405ac4e6eb54365c30f21910d",
+                                                    "type": "text",
+                                                    "value": "transfer_to_agent",
+                                                    "link": "",
+                                                    "target": "blank",
+                                                    "action":"#987a7c8a-f24a-433b-a443-6f2ab66e0840",
+                                                    "attributes": "",
+                                                    "show_echo": true
+                                                },
+                                                {
+                                                    "uid": "76c13b6d5d394297bb8d8d7891a9a5df",
+                                                    "type": "action",
+                                                    "value": "ask_kb",
+                                                    "link": "",
+                                                    "target": "blank",
+                                                    "action": "#ec525226-091d-42b8-9b3a-7673dbea8b7a",
+                                                    "attributes": "",
+                                                    "show_echo": true
+                                                },
+                                                {
+                                                    "uid": "8e0373c8daac44b1bd04afab179e54a5",
+                                                    "type": "action",
+                                                    "value": "ask_kb_and_reply",
+                                                    "link": "",
+                                                    "target": "blank",
+                                                    "action": "#e86caa0c-8236-4521-bf9c-f3af8b9cebbd",
+                                                    "attributes": "",
+                                                    "show_echo": true
+                                                },
+                                                {
+                                                    "uid": "4e9d4ebadfe445db9e5695e1f4c791f3",
+                                                    "type": "action",
+                                                    "value": "set_attribute",
+                                                    "link": "",
+                                                    "target": "blank",
+                                                    "action": "#83ecf20e-9d98-4b5a-85b3-28b1b61b6bbe",
+                                                    "attributes": "",
+                                                    "show_echo": true
+                                                },
+                                                {
+                                                    "uid": "34d267fd503144859a7ed8003fb335e2",
+                                                    "type": "text",
+                                                    "value": "close_conversation",
+                                                    "link": "",
+                                                    "target": "blank",
+                                                    "action": "",
+                                                    "attributes": "",
+                                                    "show_echo": true
+                                                }
+                                            ],
+                                            "json_buttons": "",
+                                            "json_gallery": ""
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "text": "Hi, how can I help you?\r\n",
+                    "_tdActionId": "2de7c3daf76d46ee988f55aaed6486fc",
+                    "_outline": "none",
+                    "_isNoFeatured": false
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "intent_display_name": "welcome",
+            "intent_id": "2d7e6967-9881-4e13-899c-20ae9d49ce2f",
+            "language": "en",
+            "attributes": {
+                "position": {
+                    "x": 667,
+                    "y": 149
+                },
+                "color": "156,163,205",
+                "nextBlockAction": {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "0b588d57-b922-4614-8362-30b35d4cbf4c",
+                    "_tdActionType": "intent",
+                    "intentName": null
+                },
+                "connectors": {}
+            },
+            "agents_available": false
+        },
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "786f30c0-c295-4b9b-9c2c-0728f8a6464f",
+                    "_tdActionType": "ai_prompt",
+                    "max_tokens": 256,
+                    "temperature": 0.7,
+                    "model": "gpt-4o",
+                    "assignReplyTo": "ai_reply",
+                    "preview": [
+                        {
+                            "name": "conversation_id",
+                            "value": "123"
+                        },
+                        {
+                            "name": "chatbotToken",
+                            "value": "token"
+                        }
+                    ],
+                    "formatType": "none",
+                    "llm": "openai",
+                    "modelName": "GPT-4o",
+                    "question": "chiedi all'utente questi dati:\nnome\ncognome\ncodice fiscale.\nquando hai finito salutalo con  solo \"grazie\"",
+                    "servers": [
+                        {
+                            "name": "mcp communicator stage",
+                            "url": "https://stage.eks.tiledesk.com/mcp-tools/communicator/mcp",
+                            "transport": "streamable_http",
+                            "customHeaders": [],
+                            "tools": [
+                                {
+                                    "name": "ask_kb"
+                                },
+                                {
+                                    "name": "ask_kb_and_reply"
+                                },
+                                {
+                                    "name": "check_available_agents"
+                                },
+                                {
+                                    "name": "close_conversation"
+                                },
+                                {
+                                    "name": "reply_and_await_response"
+                                },
+                                {
+                                    "name": "reply_to_user"
+                                },
+                                {
+                                    "name": "set_attributes"
+                                },
+                                {
+                                    "name": "transfer_to_agent"
+                                }
+                            ]
+                        }
+                    ],
+                    "context": "",
+                    "_outline": "none",
+                    "_isNoFeatured": true,
+                    "reasoning": false,
+                    "trueIntent": null
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "language": "en",
+            "intent_display_name": "untitled_block_1",
+            "intent_id": "77981916-8d00-4bc6-bc3b-c81ce8fce815",
+            "agents_available": false,
+            "attributes": {
+                "position": {
+                    "x": 1117,
+                    "y": -447
+                },
+                "nextBlockAction": {
+                    "_tdActionId": "2de73722-12d0-4503-973c-6e7f14724173",
+                    "_tdActionType": "intent",
+                    "intentName": ""
+                },
+                "color": "156,163,205",
+                "readonly": false,
+                "connectors": {}
+            }
+        },
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "b121ffac-4ebb-48b2-8b0e-79c4d552e84d",
+                    "_tdActionType": "ai_prompt",
+                    "max_tokens": 256,
+                    "temperature": 0.7,
+                    "model": "gpt-4o",
+                    "assignReplyTo": "ai_reply",
+                    "preview": [
+                        {
+                            "name": "conversation_id",
+                            "value": "123"
+                        },
+                        {
+                            "name": "chatbotToken",
+                            "value": "token"
+                        }
+                    ],
+                    "formatType": "none",
+                    "llm": "openai",
+                    "modelName": "GPT-4o",
+                    "question": "controlla se ci sono agenti disponibili su questo dipartimento e rispondi in chat con YES o NO. Se ci sono agenti disponibili, trasferisci la chat ad un agente",
+                    "servers": [
+                        {
+                            "name": "mcp communicator stage",
+                            "url": "https://stage.eks.tiledesk.com/mcp-tools/communicator/mcp",
+                            "transport": "streamable_http",
+                            "customHeaders": [],
+                            "tools": [
+                                {
+                                    "name": "ask_kb"
+                                },
+                                {
+                                    "name": "ask_kb_and_reply"
+                                },
+                                {
+                                    "name": "check_available_agents"
+                                },
+                                {
+                                    "name": "close_conversation"
+                                },
+                                {
+                                    "name": "reply_and_await_response"
+                                },
+                                {
+                                    "name": "reply_to_user"
+                                },
+                                {
+                                    "name": "set_attributes"
+                                },
+                                {
+                                    "name": "transfer_to_agent"
+                                }
+                            ]
+                        }
+                    ],
+                    "context": "departmentId: {{department_id}}",
+                    "_outline": "2px solid rgba(156,163,205, 1)",
+                    "_isNoFeatured": true,
+                    "reasoning": false,
+                    "trueIntent": ""
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "language": "en",
+            "intent_display_name": "untitled_block_13",
+            "intent_id": "987a7c8a-f24a-433b-a443-6f2ab66e0840",
+            "agents_available": false,
+            "attributes": {
+                "position": {
+                    "x": 951,
+                    "y": -21
+                },
+                "nextBlockAction": {
+                    "_tdActionId": "5557e7be-81aa-4ad2-acff-27329bb7c503",
+                    "_tdActionType": "intent",
+                    "intentName": ""
+                },
+                "color": "156,163,205",
+                "readonly": false
+            }
+        },
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "51422aac-4a6a-4531-9708-d8057954cf39",
+                    "_tdActionType": "ai_prompt",
+                    "max_tokens": 256,
+                    "temperature": 0.7,
+                    "model": "gpt-4o",
+                    "assignReplyTo": "ai_reply",
+                    "preview": [
+                        {
+                            "name": "conversation_id",
+                            "value": "123"
+                        },
+                        {
+                            "name": "chatbotToken",
+                            "value": "token"
+                        }
+                    ],
+                    "formatType": "none",
+                    "llm": "openai",
+                    "modelName": "GPT-4o",
+                    "question": "Se l'utente mi ha chiesto informazioni sul prodotto rispondi di conseguenza utilizzando la KB \"support\"",
+                    "servers": [
+                        {
+                            "name": "mcp communicator stage",
+                            "url": "https://stage.eks.tiledesk.com/mcp-tools/communicator/mcp",
+                            "transport": "streamable_http",
+                            "customHeaders": [],
+                            "tools": [
+                                {
+                                    "name": "ask_kb"
+                                },
+                                {
+                                    "name": "ask_kb_and_reply"
+                                },
+                                {
+                                    "name": "check_available_agents"
+                                },
+                                {
+                                    "name": "close_conversation"
+                                },
+                                {
+                                    "name": "reply_and_await_response"
+                                },
+                                {
+                                    "name": "reply_to_user"
+                                },
+                                {
+                                    "name": "set_attributes"
+                                },
+                                {
+                                    "name": "transfer_to_agent"
+                                }
+                            ]
+                        }
+                    ],
+                    "context": "",
+                    "_outline": "none",
+                    "_isNoFeatured": true,
+                    "reasoning": false,
+                    "trueIntent": "#5bacaefb-2358-4422-8201-2684026e1767"
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "language": "en",
+            "intent_display_name": "untitled_block_4",
+            "intent_id": "ffb6c6ff-c9d6-42d1-a9ad-5882891a7d25",
+            "agents_available": false,
+            "attributes": {
+                "position": {
+                    "x": 1556,
+                    "y": 234
+                },
+                "nextBlockAction": {
+                    "_tdActionId": "67020937-bec7-448e-97a1-3666eaf82a55",
+                    "_tdActionType": "intent",
+                    "intentName": ""
+                },
+                "color": "156,163,205",
+                "readonly": false
+            }
+        },
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "72944cae-f4f4-47f8-ac53-e15dd8442e34",
+                    "_tdActionType": "reply",
+                    "attributes": {
+                        "disableInputMessage": false,
+                        "commands": [
+                            {
+                                "type": "wait",
+                                "time": 500
+                            },
+                            {
+                                "type": "message",
+                                "message": {
+                                    "type": "text",
+                                    "text": "chiedimi qualcosa sui nostri prodotti",
+                                    "attributes": {
+                                        "attachment": {
+                                            "type": "template",
+                                            "buttons": [],
+                                            "json_buttons": "",
+                                            "json_gallery": ""
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "_outline": "none",
+                    "_isNoFeatured": false
+                },
+                {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "857fd986-2b75-41f1-911d-17ddfbe05156",
+                    "_tdActionType": "capture_user_reply",
+                    "_outline": "none",
+                    "_isNoFeatured": true
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "language": "en",
+            "intent_display_name": "untitled_block_5",
+            "intent_id": "ec525226-091d-42b8-9b3a-7673dbea8b7a",
+            "agents_available": false,
+            "attributes": {
+                "position": {
+                    "x": 1134,
+                    "y": 384
+                },
+                "nextBlockAction": {
+                    "_tdActionId": "02700977-e713-4212-b693-60ae1296a2ff",
+                    "_tdActionType": "intent",
+                    "intentName": "#ffb6c6ff-c9d6-42d1-a9ad-5882891a7d25"
+                },
+                "connectors": {},
+                "color": "156,163,205",
+                "readonly": false
+            }
+        },
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "9d0ff6f8-0bef-4082-be9f-6e4ecc53ed94",
+                    "_tdActionType": "reply",
+                    "attributes": {
+                        "disableInputMessage": false,
+                        "commands": [
+                            {
+                                "type": "wait",
+                                "time": 500
+                            },
+                            {
+                                "type": "message",
+                                "message": {
+                                    "type": "text",
+                                    "text": "risposta: {{ai_reply}}",
+                                    "attributes": {
+                                        "attachment": {
+                                            "type": "template",
+                                            "buttons": [],
+                                            "json_buttons": "",
+                                            "json_gallery": ""
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "_outline": "2px solid rgba(156,163,205, 1)",
+                    "_isNoFeatured": false
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "language": "en",
+            "intent_display_name": "untitled_block_6",
+            "intent_id": "5bacaefb-2358-4422-8201-2684026e1767",
+            "agents_available": false,
+            "attributes": {
+                "position": {
+                    "x": 1924,
+                    "y": 425.5
+                },
+                "nextBlockAction": {
+                    "_tdActionId": "687d6121-2e31-40da-a149-c0797bceb136",
+                    "_tdActionType": "intent",
+                    "intentName": ""
+                },
+                "connectors": {},
+                "color": "156,163,205",
+                "readonly": false
+            }
+        },
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "5c6688ae-8c81-41e9-9df4-89f115c52dd4",
+                    "_tdActionType": "reply",
+                    "attributes": {
+                        "disableInputMessage": false,
+                        "commands": [
+                            {
+                                "type": "wait",
+                                "time": 500
+                            },
+                            {
+                                "type": "message",
+                                "message": {
+                                    "type": "text",
+                                    "text": "chiedimi qualcosa sui nostri prodotti",
+                                    "attributes": {
+                                        "attachment": {
+                                            "type": "template",
+                                            "buttons": [],
+                                            "json_buttons": "",
+                                            "json_gallery": ""
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "_outline": "none",
+                    "_isNoFeatured": false
+                },
+                {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "91c5dab2-e768-49e0-8895-a7575354a360",
+                    "_tdActionType": "capture_user_reply",
+                    "_outline": "none",
+                    "_isNoFeatured": true
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "language": "en",
+            "intent_display_name": "untitled_block_7",
+            "intent_id": "e86caa0c-8236-4521-bf9c-f3af8b9cebbd",
+            "agents_available": false,
+            "attributes": {
+                "position": {
+                    "x": 1134,
+                    "y": 657
+                },
+                "nextBlockAction": {
+                    "_tdActionId": "f5419d7e-392d-4819-b905-079ac5033764",
+                    "_tdActionType": "intent",
+                    "intentName": "#4ef2dcab-3a0c-457b-b85b-37c57f16cb2a"
+                },
+                "connectors": {},
+                "color": "156,163,205",
+                "readonly": false
+            }
+        },
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "d99118f2-2cdc-4926-91b4-667ddd2f768d",
+                    "_tdActionType": "ai_prompt",
+                    "max_tokens": 256,
+                    "temperature": 0.7,
+                    "model": "gpt-4o",
+                    "assignReplyTo": "ai_reply",
+                    "preview": [
+                        {
+                            "name": "conversation_id",
+                            "value": "123"
+                        },
+                        {
+                            "name": "chatbotToken",
+                            "value": "token"
+                        }
+                    ],
+                    "formatType": "none",
+                    "llm": "openai",
+                    "modelName": "GPT-4o",
+                    "question": "Se l'utente mi ha chiesto informazioni sul prodotto rispondi di conseguenza utilizzando la KB \"support\" e manda la risposta in chat",
+                    "servers": [
+                        {
+                            "name": "mcp communicator stage",
+                            "url": "https://stage.eks.tiledesk.com/mcp-tools/communicator/mcp",
+                            "transport": "streamable_http",
+                            "customHeaders": [],
+                            "tools": [
+                                {
+                                    "name": "ask_kb"
+                                },
+                                {
+                                    "name": "ask_kb_and_reply"
+                                },
+                                {
+                                    "name": "check_available_agents"
+                                },
+                                {
+                                    "name": "close_conversation"
+                                },
+                                {
+                                    "name": "reply_and_await_response"
+                                },
+                                {
+                                    "name": "reply_to_user"
+                                },
+                                {
+                                    "name": "set_attributes"
+                                },
+                                {
+                                    "name": "transfer_to_agent"
+                                }
+                            ]
+                        }
+                    ],
+                    "context": "",
+                    "_outline": "2px solid rgba(156,163,205, 1)",
+                    "_isNoFeatured": true,
+                    "reasoning": false,
+                    "trueIntent": ""
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "language": "en",
+            "intent_display_name": "untitled_block_8",
+            "intent_id": "4ef2dcab-3a0c-457b-b85b-37c57f16cb2a",
+            "agents_available": false,
+            "attributes": {
+                "position": {
+                    "x": 1526,
+                    "y": 670
+                },
+                "nextBlockAction": {
+                    "_tdActionId": "998ad14d-a160-45d6-b33d-8a9fa72c5979",
+                    "_tdActionType": "intent",
+                    "intentName": ""
+                },
+                "color": "156,163,205",
+                "readonly": false
+            }
+        },
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "0e84e614-3aff-452e-be0c-d0421b322178",
+                    "_tdActionType": "ai_prompt",
+                    "max_tokens": 256,
+                    "temperature": 0.7,
+                    "model": "gpt-4o",
+                    "assignReplyTo": "ai_reply",
+                    "preview": [],
+                    "formatType": "none",
+                    "_outline": "2px solid rgba(156,163,205, 1)",
+                    "_isNoFeatured": true,
+                    "llm": "openai",
+                    "modelName": "GPT-4o",
+                    "reasoning": false,
+                    "question": "Chiedi all'utente questi dati:\nnome => \"nome\" di tipo stringa\ncognome => \"cognome\"\ncodice fiscale => \"cf\"\ne salva questi dati in tre variabili diverse con i nomi che ti ho già elencato prima. poi dai conferma e ringrazia dei dati inviati",
+                    "servers": [
+                        {
+                            "name": "mcp communicator stage",
+                            "url": "https://stage.eks.tiledesk.com/mcp-tools/communicator/mcp",
+                            "transport": "streamable_http",
+                            "customHeaders": [],
+                            "tools": [
+                                {
+                                    "name": "ask_kb"
+                                },
+                                {
+                                    "name": "ask_kb_and_reply"
+                                },
+                                {
+                                    "name": "check_available_agents"
+                                },
+                                {
+                                    "name": "close_conversation"
+                                },
+                                {
+                                    "name": "reply_and_await_response"
+                                },
+                                {
+                                    "name": "reply_to_user"
+                                },
+                                {
+                                    "name": "set_attributes"
+                                },
+                                {
+                                    "name": "transfer_to_agent"
+                                }
+                            ]
+                        }
+                    ],
+                    "trueIntent": "#1b67c71e-1fec-426b-9f56-0f5e28029f44"
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "language": "en",
+            "intent_display_name": "untitled_block_10",
+            "intent_id": "83ecf20e-9d98-4b5a-85b3-28b1b61b6bbe",
+            "agents_available": false,
+            "attributes": {
+                "position": {
+                    "x": 1119.5,
+                    "y": 1048.5
+                },
+                "nextBlockAction": {
+                    "_tdActionId": "b37757a3-8c33-4f68-af80-a07fffebf3a9",
+                    "_tdActionType": "intent",
+                    "intentName": ""
+                },
+                "connectors": {},
+                "color": "156,163,205",
+                "readonly": false
+            }
+        },
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "a041e204-46b4-4b86-9b8d-58d9312a884e",
+                    "_tdActionType": "reply",
+                    "attributes": {
+                        "disableInputMessage": false,
+                        "commands": [
+                            {
+                                "type": "wait",
+                                "time": 500
+                            },
+                            {
+                                "type": "message",
+                                "message": {
+                                    "type": "text",
+                                    "text": "success: {{nome}} - {{cognome}}",
+                                    "attributes": {
+                                        "attachment": {
+                                            "type": "template",
+                                            "buttons": [],
+                                            "json_buttons": "",
+                                            "json_gallery": ""
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "_outline": "2px solid rgba(156,163,205, 1)",
+                    "_isNoFeatured": false
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "language": "en",
+            "intent_display_name": "untitled_block_11",
+            "intent_id": "1b67c71e-1fec-426b-9f56-0f5e28029f44",
+            "agents_available": false,
+            "attributes": {
+                "position": {
+                    "x": 1557,
+                    "y": 1315
+                },
+                "nextBlockAction": {
+                    "_tdActionId": "984a1e5d-128b-4c4a-ae15-01d76d434302",
+                    "_tdActionType": "intent",
+                    "intentName": ""
+                },
+                "connectors": {},
+                "color": "156,163,205",
+                "readonly": false
+            }
+        },
+        {
+            "webhook_enabled": false,
+            "enabled": true,
+            "actions": [
+                {
+                    "_tdActionTitle": "",
+                    "_tdActionId": "f7196e47-9497-4fb7-b5bb-ec56ad892c2c",
+                    "_tdActionType": "ai_prompt",
+                    "max_tokens": 256,
+                    "temperature": 0.7,
+                    "model": "gpt-4o",
+                    "assignReplyTo": "ai_reply",
+                    "preview": [
+                        {
+                            "name": "conversation_id",
+                            "value": "123"
+                        },
+                        {
+                            "name": "chatbotToken",
+                            "value": "token"
+                        }
+                    ],
+                    "formatType": "none",
+                    "llm": "openai",
+                    "modelName": "GPT-4o",
+                    "question": "controlla se ci sono agenti disponibili su questo dipartimento e rispondi in chat con YES o NO",
+                    "servers": [
+                        {
+                            "name": "mcp communicator stage",
+                            "url": "https://stage.eks.tiledesk.com/mcp-tools/communicator/mcp",
+                            "transport": "streamable_http",
+                            "customHeaders": [],
+                            "tools": [
+                                {
+                                    "name": "ask_kb"
+                                },
+                                {
+                                    "name": "ask_kb_and_reply"
+                                },
+                                {
+                                    "name": "check_available_agents"
+                                },
+                                {
+                                    "name": "close_conversation"
+                                },
+                                {
+                                    "name": "reply_and_await_response"
+                                },
+                                {
+                                    "name": "reply_to_user"
+                                },
+                                {
+                                    "name": "set_attributes"
+                                },
+                                {
+                                    "name": "transfer_to_agent"
+                                }
+                            ]
+                        }
+                    ],
+                    "context": "",
+                    "_outline": "2px solid rgba(156,163,205, 1)",
+                    "_isNoFeatured": true,
+                    "reasoning": false,
+                    "trueIntent": ""
+                }
+            ],
+            "id_faq_kb": "6a058a6f4e581b0013f67100",
+            "language": "en",
+            "intent_display_name": "untitled_block_12",
+            "intent_id": "2b3ca040-507d-435f-bc25-e93e5aedf5d5",
+            "agents_available": false,
+            "attributes": {
+                "position": {
+                    "x": 1128,
+                    "y": 6
+                },
+                "nextBlockAction": {
+                    "_tdActionId": "1ae2c8db-4062-4f94-aefc-a275a67a5c87",
+                    "_tdActionType": "intent",
+                    "intentName": ""
+                },
+                "color": "156,163,205",
+                "readonly": false
+            }
+        }
+    ]
+}
