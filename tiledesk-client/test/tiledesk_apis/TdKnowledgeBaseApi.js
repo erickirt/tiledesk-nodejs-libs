@@ -33,6 +33,55 @@ class KnowledgeBase {
         })
     }
 
+    async addNamespace(name, hybrid = false) {
+        return new Promise((resolve, reject) => {
+            const URL = `${this.APIURL}/${this.PROJECT_ID}/kb/namespace`
+            const HTTPREQUEST = {
+                url: URL,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': this.JWT_TOKEN
+                },
+                json: { name: name, hybrid: hybrid },
+                method: 'POST'
+            };
+            Utils.myrequest(
+                HTTPREQUEST,
+                (err, resbody) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(resbody);
+                    }
+                }, this.LOG
+            )
+        })
+    }
+
+    async deleteNamespace(namespace_id) {
+        return new Promise((resolve, reject) => {
+            const URL = `${this.APIURL}/${this.PROJECT_ID}/kb/namespace/${namespace_id}`
+            const HTTPREQUEST = {
+                url: URL,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': this.JWT_TOKEN
+                },
+                method: 'DELETE'
+            };
+            Utils.myrequest(
+                HTTPREQUEST,
+                (err, resbody) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(resbody);
+                    }
+                }, this.LOG
+            )
+        })
+    }
+
     async addContentToNamespace(data) {
         return new Promise((resolve, reject) => {
             const URL = `${this.APIURL}/${this.PROJECT_ID}/kb/`
