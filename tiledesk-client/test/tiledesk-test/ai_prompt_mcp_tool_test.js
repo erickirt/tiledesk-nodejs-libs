@@ -906,6 +906,268 @@ describe('CHATBOT: Ai Prompt with MCP Tool', function () {
             });
         });
     });
+
+    describe('ask_kb tool', () => {
+        let example_content = {
+            name: "prodotti che abbiamo disponibili",
+            source:"prodotti che abbiamo disponibili",
+            content: "carta, cartone, quaderni, penne, matite",
+            type: "text",
+            namespace: null
+        }
+        let content_id = null;
+        let integration_id;
+        let elapsed;
+
+        before(() => {
+            return new Promise(async (resolve, reject) => {
+                const tdClientTest = new TiledeskClientTest({
+                    APIURL: API_ENDPOINT,
+                    PROJECT_ID: TILEDESK_PROJECT_ID,
+                    TOKEN: USER_ADMIN_TOKEN,
+                    GPT_KEY: process.env.GPT_KEY
+                });
+                /** ADD CONTENT TO KNOWLEDGE BASE */
+                let supportNamespace = await tdClientTest.knowledgeBase.addNamespace("support").catch((err) => {
+                    console.error("Error adding namespace ", err.response.status, err.response.statusText);
+                    console.error("Error detail ", JSON.stringify(err.response.data));
+                    reject(err);
+                })
+                assert(supportNamespace)
+                assert(supportNamespace.id)
+                assert(supportNamespace.name)
+                assert(supportNamespace.default === false)
+                assert(supportNamespace.hybrid === false)
+                assert.equal(supportNamespace.name, "support")
+                example_content.namespace = supportNamespace.id;
+
+                let indexing_time = Date.now();
+                let response = await tdClientTest.knowledgeBase.addContentToNamespace(example_content).catch((err) => {
+                    console.error("Error adding content to namespace ", err.response.status, err.response.statusText);
+                    console.error("Error detail ", JSON.stringify(err.response.data));
+                    reject(err);
+                })
+                assert(response.value.type === 'text');
+                assert(response.value.source === example_content.name);
+                assert(response.value.namespace === example_content.namespace);
+                assert(response.value.status === -1);
+
+                let content = response.value;
+                let payload = { 
+                    namespace: content.namespace, 
+                    id: content._id,
+                    namespace_list: []
+                }
+                content_id = payload.id;
+
+                let i = 0;
+                const waitForIndexing = new Promise(async (resolveIndexing, rejectIndexing) => {
+                    async function execute(i) {
+                        if (i > 10) {
+                            rejectIndexing("Indexing probably locked");
+                        }
+        
+                        let status = await tdClientTest.knowledgeBase.checkContentStatus(payload).catch((err) => {
+                            console.error("Error checking content status ", err.response.status, err.response.statusText);
+                            console.error("Error detail ", JSON.stringify(err.response.data));
+                            rejectIndexing(err);
+                        })
+            
+                        if (status.status_code === 3) {
+                            indexing_time = Date.now() - indexing_time;
+                            console.log("\tResource indexed in about " + indexing_time/1000 + " seconds");
+                            resolveIndexing(true)
+                        } else {
+                            setTimeout( async () => {
+                                await execute(i+1);
+                            }, 1000)
+                        }
+        
+                    }
+                    execute(i);
+                })
+            
+                let indexed = await waitForIndexing.catch((err) => {
+                    reject(err);
+                    return
+                });
+
+                if (!indexed) {
+                    return;
+                }
+
+                /** ADD GPT KEY AND OPENAI INTEGRATION */
+                const validate = await tdClientTest.ai.validateOpenAiKey().catch((err) => { 
+                    console.error(err); 
+                    reject(err);
+                })
+                assert(validate)
+                assert(validate.object)
+                assert(validate.data)
+                const integration = await tdClientTest.integration.addIntegration("openai", { apikey: tdClientTest.ai.getKEY(), organization: 'test-lib' }).catch((err) => { 
+                    console.error(err); 
+                    reject(err);
+                })
+                assert(integration)
+                assert(integration._id)
+                assert(integration.name)
+                assert.equal(integration.name, 'openai')
+                assert(integration.value)
+                assert(integration.value.apikey)
+                assert(integration.value.organization)
+                assert.equal(integration.value.apikey, tdClientTest.ai.getKEY())
+                assert.equal(integration.value.organization, 'test-lib')
+                integration_id = integration._id
+                resolve();
+            });
+        });
+
+        after(() => {
+            return new Promise(async (resolve, reject) => {
+                const tdClientTest = new TiledeskClientTest({
+                    APIURL: API_ENDPOINT,
+                    PROJECT_ID: TILEDESK_PROJECT_ID,
+                    TOKEN: USER_ADMIN_TOKEN
+                });
+                const deleteContent = await tdClientTest.knowledgeBase.deleteContent(content_id).catch((err) => {
+                    assert.ok(false);
+                })
+                assert(deleteContent._id === content_id)
+
+                const deleteNamespace = await tdClientTest.knowledgeBase.deleteNamespace(supportNamespace.id).catch((err) => {
+                    assert.ok(false);
+                })
+                assert(deleteNamespace.success === true)
+    
+                const integration_result = await tdClientTest.integration.deleteIntegration(integration_id).catch((err) => { 
+                    console.error(err); 
+                    reject(err);
+                })
+                assert(integration_result)
+                assert(integration_result.success===true)
+                resolve();
+            });
+        });
+
+        it('ask_kb tool', () => {
+            return new Promise(async (resolve, reject) => {
+                let hasAskMessage = false
+                const messageHandler = async (message, topic) => {
+                    const message_text = 'ask_kb'
+                    if(message.recipient !== recipient_id){
+                        reject();
+                        return;
+                    }
+                    console.log("message: ", message);
+                    if (LOG_STATUS) {
+                        console.log(">(1) Incoming message [sender:" + message.sender_fullname + "]: ", message);
+                    }
+                    if (
+                        message && 
+                        message.attributes?.intentName ===  "welcome" &&
+                        message.sender_fullname === "MCP communicator"
+                    ) {
+                        assert(message.attributes, "Expect message.attributes exist")
+                        assert(message.attributes.commands, "Expect message.attributes.commands")
+                        assert(message.attributes.commands.length >= 2, "Expect message.attributes.commands.length > 2")
+                        let commands = message.attributes.commands
+                        let command = commands[1]
+                        assert.equal(command.type, 'message')
+                        assert(command.message, "Expect command.message exist")
+                        let msg = command.message
+                        assert(msg.text, "Expect msg.text exist")
+                        assert.equal(msg.text, 'Select a tool to test from the list', `Expect msg.text to be 'Select a tool to test from the list' but got: ${msg.text} `)
+                        
+                        //check buttons 
+                        assert(msg.attributes, "Expect msg.attribues exist")
+                        assert(msg.attributes.attachment, "Expect msg.attributes.attachment exist")
+                        assert(msg.attributes.attachment.buttons, "Expect msg.attributes.attachment.buttons exist")
+                        assert(msg.attributes.attachment.buttons.length > 0, "Expect msg.attributes.attachment.buttons.length > 0")
+                        
+                        let button1 = msg.attributes.attachment.buttons[4]
+                        assert.strictEqual(button1.value, message_text, "Expect button1 to have 'ask_kb' as text")
+                        assert(button1.action)
+
+                        chatClient1.sendMessage(
+                            message_text,
+                            'text',
+                            recipient_id,
+                            "Test support group",
+                            user1.fullname,
+                            {projectId: config.TILEDESK_PROJECT_ID, action: button1.action },
+                            null, // no metadata
+                            'group',
+                            (err, msg) => {
+                                if (err) {
+                                    console.error("Error send:", err);
+                                }
+                                if (LOG_STATUS) {
+                                    console.log("Message Sent ok:", msg);
+                                }
+                            }
+                        )
+                    }
+                    else if(message && message.sender_fullname === "MCP communicator"){
+                        assert(message.attributes, "Expect message.attributes exist")
+                        assert(message.attributes.commands, "Expect message.attributes.commands")
+                        assert(message.attributes.commands.length >= 2, "Expect message.attributes.commands.length > 2")
+                        let commands = message.attributes.commands
+                        
+                        let command1 = commands[1]
+                        assert.equal(command1.type, 'message')
+                        assert(command1.message, "Expect command.message exist")
+                        let msg = command1.message
+                        assert(msg.text, "Expect msg.text exist")
+                        assert.equal(msg.text, 'chiedimi qualcosa sui nostri prodotti', `Expect msg.text to be 'chiedimi qualcosa sui nostri prodotti' but got: ${msg.text} `)
+                        
+                        chatClient1.sendMessage(
+                            'quali sono i vostri prodotti?',
+                            'text',
+                            recipient_id,
+                            "Test support group",
+                            user1.fullname,
+                            {projectId: config.TILEDESK_PROJECT_ID},
+                            null, // no metadata
+                            'group',
+                            (err, msg) => {
+                                if (err) {
+                                    console.error("Error send:", err);
+                                }
+                                if (LOG_STATUS) {
+                                    console.log("Message Sent ok:", msg);
+                                }
+
+                                assert.equal(msg.text, model, `Message sent from user expected to be "${message_text}"`)
+                                hasAskMessage = true
+                            }
+                        );
+                    }
+                    else if(message && message.sender_fullname === "MCP communicator" && hasAskMessage){
+                        console.log("message insideeee: ", message);
+                        assert(message.text)
+                        assert.equal(message.text, "carta, cartone, quaderni, penne, matite", "Expect message.text to be 'carta, cartone, quaderni, penne, matite'");
+                        assert.equal(message.sender_fullname, "MCP communicator");
+                        assert.equal(message.sender, BOT_ID);
+                        assert.equal(message.recipient, recipient_id);
+                        resolve(); 
+                    }
+                    else {
+                        // console.log("Message not computed: " + message.text);
+                    }
+                }
+                handlerId = chatClient1.onMessageAdded(messageHandler);
+                if (LOG_STATUS) {
+                    console.log("Sending test message...");
+                }
+                let recipient_id = group_id + '_5';
+                triggerConversation(recipient_id, BOT_ID, user1.tiledesk_token, async (err) => {
+                    if (err) {
+                        console.error("An error occurred while triggering echo bot conversation:", err);
+                    }
+                });
+            });
+        });
+    })
     
 });
 
